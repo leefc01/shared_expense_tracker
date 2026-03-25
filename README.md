@@ -1,7 +1,3 @@
-Below is a `README.md` tailored to the script you provided.
-
-***
-
 # Receipt OCR Importer (Google Apps Script)
 
 This Google Apps Script processes receipt files from Google Drive using the Google Cloud Vision API, extracts text via OCR, infers key fields (date, vendor, category, total amount), and logs results into a Google Sheet. It also deduplicates receipts using a content hash to avoid double‑counting.
