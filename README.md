@@ -93,7 +93,30 @@ Set these in **Apps Script > Project Settings > Script Properties**:
 > ⚠️ Note: Vision API is optional. Use `OCR_MODE = DRIVE` to minimize setup and avoid API keys.
 
 ---
+## Recommended Folder Structure
 
+Organize your Google Drive for smooth processing:
+
+    /Shared Expense Tracker
+    ├── Inbound Receipts/Invoices  <-- place files here for processing
+    │   ├── HOA_Invoice_01.pdf
+    │   ├── Vendor_Receipt_2026-03-20.jpg
+    │   └── ...
+    ├── Processed Receipts/Invoices  <-- files are moved here after processing
+    └── Logs (optional)              <-- if you want to keep a separate folder of exported logs
+
+### Notes:
+
+- **Inbound folder**: All files you want to process must be uploaded here. Supported file types:
+  - PDF
+  - Images (JPEG, PNG)
+  - Google Docs
+  - Microsoft Word (.docx)
+  - CSV, Plain Text, Markdown
+- **Processed folder**: Files are automatically moved here after successful processing.
+- **Folder IDs** must match your Script Properties or be hard-coded in `DriveService`.
+
+> ⚠️ Ensure the Apps Script has **access to these folders** with at least Viewer+ permissions. Otherwise, file moves and OCR may fail.
 ## Perquisites
 
 1. **Google Workspace Account** with access to Drive and Sheets
