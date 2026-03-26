@@ -38,8 +38,11 @@ const SheetService = (function() {
     sheet.appendRow([fileName, ocrText, new Date()]);
   }
 
+  // Bug 1 fix: getLastRow() returns 1 when only the header row exists, making
+  // getLastRow()-1 = 0, which causes getRange() to throw. Guard against this.
   function getExistingHashes(sheet) {
-    const data = sheet.getRange(2, 10, sheet.getLastRow()-1).getValues(); // column 10 = Hash
+    if (sheet.getLastRow() <= 1) return new Set();
+    const data = sheet.getRange(2, 10, sheet.getLastRow() - 1).getValues();
     return new Set(data.flat().filter(Boolean));
   }
 

@@ -15,7 +15,7 @@ const OCRService = {
 
     if (mime.startsWith("text/")) {
       LoggerService.info("Using native text parser");
-      try { return file.getBlob().getDataAsString(); } 
+      try { return file.getBlob().getDataAsString(); }
       catch (e) { LoggerService.error("Failed to read text file: " + e.toString()); return null; }
     }
 
@@ -38,13 +38,27 @@ const OCRService = {
     return VisionService.extractText(file);
   },
 
+  // Bug 2 fix: temp file was only deleted on the happy path. If openById() or
+  // getText() threw, the catch block swallowed the error and Drive.Files.remove()
+  // was never reached, permanently orphaning the temp doc. Use try/finally so
+  // cleanup always runs regardless of whether extraction succeeded or failed.
   extractWithDrive(file) {
+    const resource = {
+      title: "temp_ocr_" + new Date().getTime(),
+      mimeType: "application/vnd.google-apps.document"
+    };
+    let temp;
     try {
-      const resource = { title: "temp_ocr_" + new Date().getTime(), mimeType: "application/vnd.google-apps.document" };
-      const temp = Drive.Files.copy(resource, file.getId());
-      const text = DocumentApp.openById(temp.id).getBody().getText();
-      Drive.Files.remove(temp.id); // cleanup
-      return text;
-    } catch (e) { LoggerService.error("Drive OCR failed: " + e.toString()); return null; }
+      temp = Drive.Files.copy(resource, file.getId());
+      return DocumentApp.openById(temp.id).getBody().getText();
+    } catch (e) {
+      LoggerService.error("Drive OCR failed: " + e.toString());
+      return null;
+    } finally {
+      if (temp) {
+        try { Drive.Files.remove(temp.id); }
+        catch (e) { LoggerService.warn("Failed to delete temp OCR file: " + e.toString()); }
+      }
+    }
   }
 };

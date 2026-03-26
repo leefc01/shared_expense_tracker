@@ -11,13 +11,16 @@ const DocumentProcessor = {
     };
     LoggerService.info(`Processor Mode: ${options.mode}, ML Mode: ${options.mlMode}`);
 
-    if (options.mode === "DOCUMENT_AI") {
-      LoggerService.warn("Document AI selected but not implemented");
+    let parser;
+    try {
+      parser = ParserFactory.getParser();
+    } catch (e) {
+      LoggerService.error("Parser selection failed: " + e.toString());
       return null;
     }
 
     let text;
-    try { text = OCRService.extractText(file); } 
+    try { text = OCRService.extractText(file); }
     catch (e) { LoggerService.error("OCR failed: " + e.toString()); return null; }
 
     if (!text) {
@@ -25,7 +28,7 @@ const DocumentProcessor = {
       return null;
     }
 
-    const parsed = VisionParser.parseFromText(text, file);
+    const parsed = parser.parseFromText(text, file);
 
     // Post-processing: hash, category, filename, url
     parsed.hash = Utils.generateHash(parsed.rawText);
