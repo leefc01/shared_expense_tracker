@@ -327,12 +327,12 @@ The script will use Vision API for images and PDFs, and automatically fall back 
 |----------|----------|---------|-------------|
 | `INBOUND_FOLDER_ID` | Yes | — | Google Drive folder ID for inbound files |
 | `PROCESSED_FOLDER_ID` | Yes | — | Google Drive folder ID for processed files |
-| `OCR_MODE` | No | `VISION` | `DRIVE` for Drive OCR (free, no API key), `VISION` for Vision API |
-| `PROCESSOR_MODE` | No | `OCR_RULE` | `OCR_RULE` is the only active mode. `DOCUMENT_AI` is reserved for future use. |
-| `ML_MODE` | No | `OFF` | Reserved for future ML-assisted parsing |
-| `VISION_API_KEY` | Only if `OCR_MODE=VISION` | — | Google Cloud Vision API key |
-| `LOGGER_LEVEL` | No | `3` | `1` = errors only, `2` = warnings + errors, `3` = all |
-| `LOGGER_SHEET_ENABLED` | No | `OFF` | Set to `ON` to write log entries to the OCR_Log sheet |
+| `OCR_MODE` (optional)| No | `VISION` | `DRIVE` for Drive OCR (free, no API key), `VISION` for Vision API |
+| `PROCESSOR_MODE` (optional)| No | `OCR_RULE` | `OCR_RULE` is the only active mode. `DOCUMENT_AI` is reserved for future use. |
+| `ML_MODE` (optional)| No | `OFF` | Reserved for future ML-assisted parsing |
+| `VISION_API_KEY` (optional)| Only if `OCR_MODE=VISION` | — | Google Cloud Vision API key |
+| `LOGGER_LEVEL` (optional)| No | `3` | `1` = errors only, `2` = warnings + errors, `3` = all |
+| `LOGGER_SHEET_ENABLED` (optional)| No | `OFF` | Set to `ON` to write log entries to the OCR_Log sheet |
 
 ---
 
