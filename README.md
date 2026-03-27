@@ -365,7 +365,7 @@ You can name these folders anything you like — what matters is that you copy t
 
 ## Human corrections and ML training
 
-The **Human Correction** column in the Receipts sheet serves two purposes: fixing individual rows that the parser got wrong, and building a labeled dataset for future ML improvements.
+The **Human Correction** column in the Receipts sheet serves two purposes: fixing individual rows that the parser got wrong, and building a labeled dataset for future ML improvements.  You don't actually need to do this, but it sets you up with training data for later.  Fun for everyone.
 
 ### How to fill it in
 
